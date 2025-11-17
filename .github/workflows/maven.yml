@@ -1,0 +1,31 @@
+# File: .github/workflows/maven.yml
+
+name: Java CI with Maven
+
+on:
+  push:
+    branches: [ "main" ]  # Runs on pushes to the main branch
+  pull_request:
+    branches: [ "main" ]  # Runs on pull requests to the main branch
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checks out your code
+      - uses: actions/checkout@v4
+
+      # 2. Sets up the correct Java version (e.g., 17)
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: maven
+
+      # 3. This is the magic command!
+      # 'mvn -B package' builds the project AND automatically runs all tests
+      - name: Build with Maven and Run Tests
+        run: mvn -B package
