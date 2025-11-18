@@ -42,7 +42,6 @@ public enum Compass {
             default:
                 bearing = UNKNOWN;
         }
-
         return bearing;
     }
 }
