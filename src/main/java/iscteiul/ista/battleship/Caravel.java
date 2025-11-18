@@ -19,14 +19,20 @@ public class Caravel extends Ship {
 
         switch (bearing) {
             case NORTH:
+                for (int n = 0; n < SIZE; n++)
+                    getPositions().add(new Position(pos.getRow() - n, pos.getColumn()));
+                break;
             case SOUTH:
-                for (int r = 0; r < SIZE; r++)
-                    getPositions().add(new Position(pos.getRow() + r, pos.getColumn()));
+                for (int s = 0; s < SIZE; s++)
+                    getPositions().add(new Position(pos.getRow() + s, pos.getColumn()));
                 break;
             case EAST:
+                for (int e = 0; e < SIZE; e++)
+                    getPositions().add(new Position(pos.getRow(), pos.getColumn() - e));
+                break;
             case WEST:
-                for (int c = 0; c < SIZE; c++)
-                    getPositions().add(new Position(pos.getRow(), pos.getColumn() + c));
+                for (int w = 0; w < SIZE; w++)
+                    getPositions().add(new Position(pos.getRow(), pos.getColumn() + w));
                 break;
             default:
                 throw new IllegalArgumentException("ERROR! invalid bearing for the caravel");
