@@ -76,7 +76,6 @@ class CaravelTest {
     @Test
     @DisplayName("A Caravel should have a size of 2")
     void testCaravelSize() {
-
         IPosition startPos = new Position(0, 0);
         Caravel caravel = new Caravel(Compass.NORTH, startPos);
 
@@ -88,7 +87,6 @@ class CaravelTest {
     @Test
     @DisplayName("Constructor should throw IllegalArgumentException for invalid bearing")
     void testConstructorInvalidBearing() {
-
         IPosition startPos = new Position(1, 1);
 
         assertThrows(IllegalArgumentException.class, () -> {
