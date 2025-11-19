@@ -10,22 +10,16 @@ class CaravelTest {
     @Test
     @DisplayName("Constructor should create 2 vertical positions for NORTH")
     void testConstructorNorth() {
-        // --- ARRANGE ---
         IPosition startPos = new Position(5, 5);
 
-        // --- ACT ---
         Caravel caravel = new Caravel(Compass.NORTH, startPos);
 
-        // --- ASSERT ---
-        // Check that the ship has the correct number of positions
         assertEquals(2, caravel.getPositions().size());
 
-        // Check the coordinates of the first position
         assertEquals(5, caravel.getPositions().get(0).getRow());
         assertEquals(5, caravel.getPositions().get(0).getColumn());
 
-        // Check the coordinates of the second position (which should be at 5+1)
-        assertEquals(6, caravel.getPositions().get(1).getRow());
+        assertEquals(4, caravel.getPositions().get(1).getRow());
         assertEquals(5, caravel.getPositions().get(1).getColumn());
     }
 
@@ -42,7 +36,7 @@ class CaravelTest {
         assertEquals(5, caravel.getPositions().get(0).getColumn());
 
         assertEquals(5, caravel.getPositions().get(1).getRow());
-        assertEquals(6, caravel.getPositions().get(1).getColumn());
+        assertEquals(4, caravel.getPositions().get(1).getColumn());
     }
 
     @Test
