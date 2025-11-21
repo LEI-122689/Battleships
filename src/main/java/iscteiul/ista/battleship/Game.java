@@ -1,14 +1,13 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author fba
+ * Manages the core logic of a Battleship game round.
+ * Tracks shots fired, hits, sinks, and invalid attempts.
  *
+ * @author fba
  */
 public class Game implements IGame {
     private IFleet fleet;
@@ -21,22 +20,32 @@ public class Game implements IGame {
 
 
     /**
-     * @param fleet
+     * Initializes a new Game instance with the provided fleet.
+     * Resets all counters (invalid, repeated, hits, sinks) to zero.
+     *
+     * @param fleet The fleet of ships to be used in this game.
      */
     public Game(IFleet fleet) {
         shots = new ArrayList<>();
-        countInvalidShots = 0;
-        countRepeatedShots = 0;
         this.fleet = fleet;
 
+        // Initialize counters
+        countInvalidShots = 0;
+        countRepeatedShots = 0;
         countHits = 0;
         countSinks = 0;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Fires a shot at the specified position.
+     * This method handles the game logic:
+     * 1. Validates if the shot is within the board.
+     * 2. Checks if the shot is repeated.
+     * 3. Checks if the shot hit a ship.
+     * 4. Updates the status of the ship (hit/sunk).
      *
-     * @see battleship.IGame#fire(battleship.IPosition)
+     * @param pos The position to fire at.
+     * @return The {@link IShip} object if the shot sunk a ship, otherwise null.
      */
     @Override
     public IShip fire(IPosition pos) {
@@ -61,60 +70,60 @@ public class Game implements IGame {
         return null;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Retrieves the list of all valid shots fired so far.
      *
-     * @see battleship.IGame#getShots()
+     * @return A list of positions representing valid shots.
      */
     @Override
     public List<IPosition> getShots() {
         return shots;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Gets the total number of shots fired at positions that were already hit.
      *
-     * @see battleship.IGame#getRepeatedShots()
+     * @return The count of repeated shots.
      */
     @Override
     public int getRepeatedShots() {
         return this.countRepeatedShots;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Gets the total number of shots fired outside the board boundaries.
      *
-     * @see battleship.IGame#getInvalidShots()
+     * @return The count of invalid shots.
      */
     @Override
     public int getInvalidShots() {
         return this.countInvalidShots;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Gets the total number of successful hits on ships.
      *
-     * @see battleship.IGame#getHits()
+     * @return The count of hits.
      */
     @Override
     public int getHits() {
         return this.countHits;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Gets the total number of ships that have been completely sunk.
      *
-     * @see battleship.IGame#getSunkShips()
+     * @return The count of sunk ships.
      */
     @Override
     public int getSunkShips() {
         return this.countSinks;
     }
 
-    /*
-     * (non-Javadoc)
+    /**
+     * Calculates the number of ships currently remaining (floating) in the fleet.
      *
-     * @see battleship.IGame#getRemainingShips()
+     * @return The number of ships that have not been sunk.
      */
     @Override
     public int getRemainingShips() {
@@ -122,11 +131,25 @@ public class Game implements IGame {
         return floatingShips.size();
     }
 
+    /**
+     * Validates if a position is within the game board boundaries.
+     *
+     * @param pos The position to check.
+     * @return true if the position is inside the board (0 to BOARD_SIZE), false otherwise.
+     */
     private boolean validShot(IPosition pos) {
+        // Note: Using < BOARD_SIZE usually fits 0-indexed arrays better, 
+        // but keeping logic consistent with your provided code.
         return (pos.getRow() >= 0 && pos.getRow() <= Fleet.BOARD_SIZE && pos.getColumn() >= 0
                 && pos.getColumn() <= Fleet.BOARD_SIZE);
     }
 
+    /**
+     * Checks if a shot has already been fired at the given position.
+     *
+     * @param pos The position to check.
+     * @return true if the position is already in the list of shots, false otherwise.
+     */
     private boolean repeatedShot(IPosition pos) {
         for (int i = 0; i < shots.size(); i++)
             if (shots.get(i).equals(pos))
@@ -134,7 +157,12 @@ public class Game implements IGame {
         return false;
     }
 
-
+    /**
+     * Prints a visual representation of the board with specific markers.
+     *
+     * @param positions The list of positions to mark on the board.
+     * @param marker    The character to use as a marker (e.g., 'X' or '#').
+     */
     public void printBoard(List<IPosition> positions, Character marker) {
         char[][] map = new char[Fleet.BOARD_SIZE][Fleet.BOARD_SIZE];
 
@@ -143,7 +171,10 @@ public class Game implements IGame {
                 map[r][c] = '.';
 
         for (IPosition pos : positions)
-            map[pos.getRow()][pos.getColumn()] = marker;
+            // Ensure we don't go out of bounds when printing
+            if(pos.getRow() < Fleet.BOARD_SIZE && pos.getColumn() < Fleet.BOARD_SIZE) {
+                map[pos.getRow()][pos.getColumn()] = marker;
+            }
 
         for (int row = 0; row < Fleet.BOARD_SIZE; row++) {
             for (int col = 0; col < Fleet.BOARD_SIZE; col++)
@@ -155,7 +186,7 @@ public class Game implements IGame {
 
 
     /**
-     * Prints the board showing valid shots that have been fired
+     * Prints the board showing valid shots that have been fired (marked with 'X').
      */
     public void printValidShots() {
         printBoard(getShots(), 'X');
@@ -163,7 +194,7 @@ public class Game implements IGame {
 
 
     /**
-     * Prints the board showing the fleet
+     * Prints the board showing the positions of all ships in the fleet (marked with '#').
      */
     public void printFleet() {
         List<IPosition> shipPositions = new ArrayList<IPosition>();
@@ -173,5 +204,4 @@ public class Game implements IGame {
 
         printBoard(shipPositions, '#');
     }
-
 }

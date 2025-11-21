@@ -1,12 +1,13 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Abstract base class representing a generic Ship.
+ * Implements common behavior for all ship types, such as position tracking, collision detection, and damage handling.
+ */
 public abstract class Ship implements IShip {
 
     private static final String GALEAO = "galeao";
@@ -16,10 +17,12 @@ public abstract class Ship implements IShip {
     private static final String BARCA = "barca";
 
     /**
-     * @param shipKind
-     * @param bearing
-     * @param pos
-     * @return
+     * Factory method to build specific Ship instances based on the category string.
+     *
+     * @param shipKind The type of ship ("barca", "nau", etc.).
+     * @param bearing  The orientation of the ship.
+     * @param pos      The starting position.
+     * @return A concrete Ship object (Barge, Frigate, etc.) or null if type is unknown.
      */
     static Ship buildShip(String shipKind, Compass bearing, Position pos) {
         Ship s;
@@ -49,13 +52,16 @@ public abstract class Ship implements IShip {
     private String category;
     private Compass bearing;
     private IPosition pos;
+    /** The list of positions occupied by the ship. */
     protected List<IPosition> positions;
 
 
     /**
-     * @param category
-     * @param bearing
-     * @param pos
+     * Constructs a generic Ship.
+     *
+     * @param category The name/category of the ship.
+     * @param bearing  The orientation.
+     * @param pos      The reference start position.
      */
     public Ship(String category, Compass bearing, IPosition pos) {
         assert bearing != null;
@@ -78,7 +84,8 @@ public abstract class Ship implements IShip {
     }
 
     /**
-     * @return the positions
+     * Retrieves the list of positions occupied by this ship.
+     * @return the positions list.
      */
     public List<IPosition> getPositions() {
         return positions;

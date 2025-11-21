@@ -1,15 +1,21 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
+/**
+ * Represents a Caravel (Caravela), which is a ship of size 2.
+ * It extends in a specific direction based on its bearing.
+ */
 public class Caravel extends Ship {
     private static final Integer SIZE = 2;
     private static final String NAME = "Caravela";
 
     /**
+     * Constructs a new Caravel with a specific bearing and starting position.
+     * Validates the bearing and calculates the occupied positions based on orientation.
+     *
      * @param bearing the bearing where the Caravel heads to
      * @param pos     initial point for positioning the Caravel
+     * @throws NullPointerException     if the bearing is null
+     * @throws IllegalArgumentException if the bearing is not a valid direction
      */
     public Caravel(Compass bearing, IPosition pos) throws NullPointerException, IllegalArgumentException {
         super(Caravel.NAME, bearing, pos);
