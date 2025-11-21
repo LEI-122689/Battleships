@@ -1,6 +1,3 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
 import java.util.Scanner;
@@ -9,6 +6,10 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+/**
+ * Utility class that manages the user interaction and game flow via text commands.
+ * Provides methods to run specific game tasks (A, B, C, D) as defined in the project requirements.
+ */
 public class Tasks {
     private static final Logger LOGGER = LogManager.getLogger();
 

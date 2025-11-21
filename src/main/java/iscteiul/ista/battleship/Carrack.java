@@ -1,15 +1,20 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
+/**
+ * Represents a Carrack (Nau), which is a ship of size 3.
+ * It extends linearly in a specific direction based on its bearing.
+ */
 public class Carrack extends Ship {
     private static final Integer SIZE = 3;
     private static final String NAME = "Nau";
 
     /**
-     * @param bearing
-     * @param pos
+     * Constructs a new Carrack with a specific bearing and starting position.
+     * Calculates the three positions occupied by the ship based on its direction.
+     *
+     * @param bearing the orientation/direction of the ship (North, South, East, West)
+     * @param pos     the starting position (tail) of the ship
+     * @throws IllegalArgumentException if the bearing is invalid or unknown
      */
     public Carrack(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Carrack.NAME, bearing, pos);

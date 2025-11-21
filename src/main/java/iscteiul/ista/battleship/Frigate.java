@@ -1,15 +1,20 @@
-/**
- *
- */
 package iscteiul.ista.battleship;
 
+/**
+ * Represents a Frigate (Fragata), which is a linear ship of size 4.
+ * It extends in a straight line based on its bearing.
+ */
 public class Frigate extends Ship {
     private static final Integer SIZE = 4;
     private static final String NAME = "Fragata";
 
     /**
-     * @param bearing
-     * @param pos
+     * Constructs a new Frigate with a specific bearing and starting position.
+     * The ship occupies 4 sequential positions in the given direction.
+     *
+     * @param bearing The orientation/direction of the ship.
+     * @param pos     The starting position (tail) of the ship.
+     * @throws IllegalArgumentException if the bearing is invalid or unknown.
      */
     public Frigate(Compass bearing, IPosition pos) throws IllegalArgumentException {
         super(Frigate.NAME, bearing, pos);
